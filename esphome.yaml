@@ -1,0 +1,63 @@
+esphome:
+  name: livingroomac
+  friendly_name: Máy Lạnh Phòng Khách
+
+esp8266:
+  board: esp01_1m
+
+web_server:
+  port: 80
+
+# Enable logging
+logger:
+  level: INFO
+  logs:
+    component: ERROR
+
+# Enable Home Assistant API
+api:
+
+
+ota:
+
+
+wifi:
+  ssid: your wifi id
+  password: your pw
+captive_portal:
+
+remote_receiver:
+  pin:
+    number: GPIO3
+    inverted: True
+    mode: OUTPUT_OPEN_DRAIN
+  tolerance: 45%
+  id: ir_receiver
+
+remote_transmitter:
+  carrier_duty_percent: 100%   # Typical value
+  pin:
+    number: GPIO4            # Separate pin for IR transmitter
+    inverted: true
+    mode: OUTPUT_OPEN_DRAIN
+  id: ir_transmit
+
+## SAMSUNG/MIDEA AC CONFIGURATION
+climate:
+  - platform: midea_ir
+    sensor: current_temperature
+    name: "Samsung AC"
+    supports_heat: False
+    supports_cool: True
+    receiver_id: ir_receiver    
+sensor:
+  - platform: homeassistant
+    id: current_temperature
+    entity_id: sensor.nhit_d_d_m_living_room_temperature # add current sensor 
+    attribute: Temperature
+
+
+
+
+
+
