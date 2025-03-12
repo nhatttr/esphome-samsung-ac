@@ -1,0 +1,66 @@
+esphome:
+  name: livingroomac
+  friendly_name: Bedroom Aircon
+
+esp8266:
+  board: esp01_1m
+
+web_server:
+  port: 80
+
+# Enable logging
+logger:
+  level: INFO
+  logs:
+    component: ERROR
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "6eSDRY9bBt/AoNXHGUbaqq9itbPPJSK4Sg3Y51Cf2vA="
+
+ota:
+  - platform: esphome
+    password: "8a8c59fcf12254054a08826e5ff8bd1a"
+
+wifi:
+  ssid: "Nhat's IoT"
+  password: "Nh@t874007"
+
+captive_portal:
+
+
+remote_receiver:
+  pin:
+    number: GPIO14
+    inverted: True
+    mode: OUTPUT_OPEN_DRAIN
+  tolerance: 45%
+  id: ir_receiver
+
+remote_transmitter:
+  carrier_duty_percent: 100%   # Typical value
+  pin:
+    number: GPIO3           # Separate pin for IR transmitter
+    inverted: true
+    mode: OUTPUT_OPEN_DRAIN
+
+# SAMSUNG/MIDEA AC CONFIGURATION
+climate:
+  - platform: midea_ir
+    sensor: current_temperature
+    name: "Samsung AC"
+    supports_heat: False
+    supports_cool: True
+    receiver_id: ir_receiver
+    
+sensor:
+  - platform: homeassistant
+    id: current_temperature  # Định nghĩa ID ở đây
+    name: Remote temperature Sensor
+    entity_id: sensor.temperature_and_humidity_bedroom_temperature   # Sensor from HASS
+    internal: true
+    filters:
+      - throttle: 10s
+      - heartbeat: 2min             # Maximum interval between updates.
+      - debounce: 1s
