@@ -17,15 +17,15 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "6eSDRY9bBt/AoNXHGUbaqq9itbPPJSK4Sg3Y51Cf2vA="
+    key: ""
 
 ota:
   - platform: esphome
-    password: "8a8c59fcf12254054a08826e5ff8bd1a"
+    password: ""
 
 wifi:
-  ssid: "Nhat's IoT"
-  password: "Nh@t874007"
+  ssid: ""
+  password: ""
 
 captive_portal:
 
